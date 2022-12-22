@@ -1,9 +1,12 @@
+/* Importing the http interface and the express application */
+
 const http = require('http');
 const app = require('./app');
 
+/* Return a valid port for the server */
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
-
   if (isNaN(port)) {
     return val;
   }
@@ -14,6 +17,8 @@ const normalizePort = val => {
 };
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
+/* Handling errors when turning server on  */
 
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
@@ -35,7 +40,11 @@ const errorHandler = error => {
   }
 };
 
+/* Creating the server */
+
 const server = http.createServer(app);
+
+/* Giving the server the functions  */
 
 server.on('error', errorHandler);
 server.on('listening', () => {
@@ -43,5 +52,7 @@ server.on('listening', () => {
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
+
+/* Start the server on the port */
 
 server.listen(port);
