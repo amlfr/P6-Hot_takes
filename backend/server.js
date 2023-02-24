@@ -1,7 +1,8 @@
-/* Importing the http interface and the express application */
+/* Importing the http interface, the express application and the environment variables*/
 
-const https = require("https");
+const http = require("http");
 const app = require("./app");
+require("dotenv").config();
 
 /* Return a valid port for the server */
 
@@ -43,9 +44,9 @@ const errorHandler = (error) => {
 
 /* Creating the server */
 
-const server = https.createServer(app);
+const server = http.createServer(app);
 
-/* Giving the server the functions  */
+/* Giving the server the listener functions  */
 
 server.on("error", errorHandler);
 server.on("listening", () => {

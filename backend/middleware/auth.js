@@ -1,18 +1,19 @@
-/* const { json } = require('express'); */
-const jwt = require('jsonwebtoken');
+/* Importing jsonwebtoken and the environment variables */
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-/* Creating the authentification middleware who checks the user's id by using the dsdjsonwebtoken */
+/* Creating the authentification middleware who checks the user's id by using the jsonwebtoken */
 
-module.exports = (req, res , next) => {
+module.exports = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'amlfrOC6_6905412780');
+        const token = req.headers.authorization.split(" ")[1];
+        const decodedToken = jwt.verify(token, process.env.JWT_KEY);
         const userId = decodedToken.userId;
         req.auth = {
-            userId: userId
+            userId: userId,
         };
-    next();
-    } catch(error) {
+        next();
+    } catch (error) {
         res.status(401).json({ error });
     }
 };

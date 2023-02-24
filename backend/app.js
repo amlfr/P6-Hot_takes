@@ -1,22 +1,26 @@
-/* Importing express, a body parser for the requests, path for working with images and mongoose to set up */
+/* Importing express, a body parser for the requests, path for working with images, environment variables and mongoose to set up */
 
-const express = require('express');
+const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', true);
-const path = require('path');
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
+const path = require("path");
+require("dotenv").config();
 
 /* Importing the differents routes of the API */
 
-const userRoutes = require('./routes/user');
-const sauceRoutes = require('./routes/sauce')
+const userRoutes = require("./routes/user");
+const sauceRoutes = require("./routes/sauce");
 
-/* Connecting to the mongoDB database,  TODO use env variable folder  */
+/* Connecting to the mongoDB database  */
 
-mongoose.connect('mongodb+srv://amlfr:8D3JogBCGhDi7AkI@cluster0.lddpcur.mongodb.net/?retryWrites=true&w=majority',
-  { useNewUrlParser: true, useUnifiedTopology: true})
-.then(() => console.log('Connexion à MongoDB réussie !'))
-.catch(() => console.log('Connexion à MongoDB échouée !'));
+mongoose
+    .connect(process.env.DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connexion à MongoDB réussie !"))
+    .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 /* Creating the  express application */
 
@@ -34,12 +38,12 @@ app.use((req, res, next) => {
 /* Using the bodyparser for the requests coming */
 
 app.use(bodyParser.json());
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 /* Setting up the routes for the applications */
 
-app.use('/api/auth', userRoutes);
-app.use('/api/sauces', sauceRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/sauces", sauceRoutes);
 
 /* Exporting the application */
 
