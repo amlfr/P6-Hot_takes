@@ -14,8 +14,11 @@ ________________
 Visite du site:
 ----------------
 Cloner le repo
+
 Utiliser la commande `npm install` dans le dossier backend puis dans le dossier frontend
+
 Lancer le frontend avec la commande `ng serve`, et le backend avec la commande `node server`
+
 Visiter le site a l'adresse "http://localhost:4200/login"
 
 
